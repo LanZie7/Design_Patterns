@@ -43,7 +43,7 @@ class WoodenDoor implements Door
 {
     protected $width;
     protected $height;
-
+    
     public function __construct(float $width, float $height)
     {
         $this->width = $width;
