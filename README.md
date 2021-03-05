@@ -33,7 +33,7 @@
 
 Прежде всего у нас есть интерфейс door и его имплементация
 
-<interface Door
+interface Door
 {
     public function getWidth(): float;
     public function getHeight(): float;
@@ -59,7 +59,7 @@ class WoodenDoor implements Door
     {
         return $this->height;
     }
-}>
+}
 
 Затем фабрика DoorFactory создает двери и возвращает их.
 
