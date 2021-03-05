@@ -38,23 +38,19 @@ interface Door
     public function getWidth(): float;
     public function getHeight(): float;
 }
-
 class WoodenDoor implements Door
 {
     protected $width;
-    protected $height;
-    
+    protected $height; 
     public function __construct(float $width, float $height)
     {
         $this->width = $width;
         $this->height = $height;
     }
-
     public function getWidth(): float
     {
         return $this->width;
     }
-
     public function getHeight(): float
     {
         return $this->height;
@@ -76,6 +72,7 @@ class DoorFactory
 $door = DoorFactory::makeDoor(100, 200);
 echo 'Width: ' . $door->getWidth();
 echo 'Height: ' . $door->getHeight();
+
 Когда использовать?
 
 Если создание объекта не ограничевается парой присвоений и требует вовлечения определенной логики, имеет смысл вынести ее в отдельную фабрику вместо постоянного повторения одного и того же кода.
@@ -102,7 +99,6 @@ interface Interviewer
 {
     public function askQuestions();
 }
-
 class Developer implements Interviewer
 {
     public function askQuestions()
@@ -123,10 +119,8 @@ class CommunityExecutive implements Interviewer
 
 abstract class HiringManager
 {
-
     // Factory method
     abstract public function makeInterviewer(): Interviewer;
-
     public function takeInterview()
     {
         $interviewer = $this->makeInterviewer();
@@ -156,9 +150,9 @@ class MarketingManager extends HiringManager
 
 $devManager = new DevelopmentManager();
 $devManager->takeInterview(); // Output: Asking about design patterns
-
 $marketingManager = new MarketingManager();
 $marketingManager->takeInterview(); // Output: Asking about community building.
+
 Когда использовать?
 
 Полезно когда в классе присутствуют несколько общих процессов, но требуемый подкласс определяется динамично во время исполнения. Или другими словами, когда клиент не знает какой конкретно подкласс может потребоваться.
@@ -185,7 +179,6 @@ interface Door
 {
     public function getDescription();
 }
-
 class WoodenDoor implements Door
 {
     public function getDescription()
@@ -193,7 +186,6 @@ class WoodenDoor implements Door
         echo 'I am a wooden door';
     }
 }
-
 class IronDoor implements Door
 {
     public function getDescription()
@@ -208,7 +200,6 @@ interface DoorFittingExpert
 {
     public function getDescription();
 }
-
 class Welder implements DoorFittingExpert
 {
     public function getDescription()
@@ -232,7 +223,6 @@ interface DoorFactory
     public function makeDoor(): Door;
     public function makeFittingExpert(): DoorFittingExpert;
 }
-
 // Wooden factory to return carpenter and wooden door
 class WoodenDoorFactory implements DoorFactory
 {
@@ -240,7 +230,6 @@ class WoodenDoorFactory implements DoorFactory
     {
         return new WoodenDoor();
     }
-
     public function makeFittingExpert(): DoorFittingExpert
     {
         return new Carpenter();
@@ -254,7 +243,6 @@ class IronDoorFactory implements DoorFactory
     {
         return new IronDoor();
     }
-
     public function makeFittingExpert(): DoorFittingExpert
     {
         return new Welder();
@@ -304,6 +292,7 @@ Having said that let me add a bit about what telescoping constructor anti-patter
 public function __construct($size, $cheese = true, $pepperoni = true, $tomato = false, $lettuce = true)
 {
 }
+
 As you can see; the number of constructor parameters can quickly get out of hand and it might become difficult to understand the arrangement of parameters. Plus this parameter list could keep on growing if you would want to add more options in future. This is called telescoping constructor anti-pattern.
 
 Пример кода
@@ -313,12 +302,10 @@ The sane alternative is to use the builder pattern. First of all we have our bur
 class Burger
 {
     protected $size;
-
     protected $cheese = false;
     protected $pepperoni = false;
     protected $lettuce = false;
     protected $tomato = false;
-
     public function __construct(BurgerBuilder $builder)
     {
         $this->size = $builder->size;
@@ -334,41 +321,34 @@ And then we have the builder
 class BurgerBuilder
 {
     public $size;
-
     public $cheese = false;
     public $pepperoni = false;
     public $lettuce = false;
     public $tomato = false;
-
     public function __construct(int $size)
     {
         $this->size = $size;
     }
-
     public function addPepperoni()
     {
         $this->pepperoni = true;
         return $this;
     }
-
     public function addLettuce()
     {
         $this->lettuce = true;
         return $this;
     }
-
     public function addCheese()
     {
         $this->cheese = true;
         return $this;
     }
-
     public function addTomato()
     {
         $this->tomato = true;
         return $this;
     }
-
     public function build(): Burger
     {
         return new Burger($this);
@@ -411,28 +391,23 @@ class Sheep
 {
     protected $name;
     protected $category;
-
     public function __construct(string $name, string $category = 'Mountain Sheep')
     {
         $this->name = $name;
         $this->category = $category;
     }
-
     public function setName(string $name)
     {
         $this->name = $name;
     }
-
     public function getName()
     {
         return $this->name;
     }
-
     public function setCategory(string $category)
     {
         $this->category = $category;
     }
-
     public function getCategory()
     {
         return $this->category;
@@ -479,26 +454,21 @@ To create a singleton, make the constructor private, disable cloning, disable ex
 final class President
 {
     private static $instance;
-
     private function __construct()
     {
         // Hide the constructor
     }
-
     public static function getInstance(): President
     {
         if (!self::$instance) {
             self::$instance = new self();
         }
-
         return self::$instance;
     }
-
     private function __clone()
     {
         // Disable cloning
     }
-
     private function __wakeup()
     {
         // Disable unserialize
