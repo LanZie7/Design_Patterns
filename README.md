@@ -38,10 +38,11 @@ interface Door
     public function getWidth(): float;
     public function getHeight(): float;
 }
+
 class WoodenDoor implements Door
 {
     protected $width;
-    protected $height; 
+    protected $height;
     public function __construct(float $width, float $height)
     {
         $this->width = $width;
